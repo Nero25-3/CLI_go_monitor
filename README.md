@@ -5,6 +5,8 @@ Basic CLI URL monitoring tool built with Go and the Cobra library. Performs HTTP
 
 The application follows a modular command-based structure using the Cobra package:
 
+"""
+
 CLI_go_monitor/
 ├── main.go # Application entry point & command setup
 ├── cmd/ # Package containing CLI commands
@@ -15,5 +17,5 @@ CLI_go_monitor/
 │ └── utils.go # Utility functions (e.g., formatting output)
 └── go.mod # Go module file
 
-undefined
+"""
 
