@@ -2,29 +2,68 @@ package internal
 
 import (
 	"log"
+	"os"
+	"sync"
 
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-// Logger wraps a standard logger with log rotation capabilities.
+type Level int
+
+const (
+	INFO Level = iota
+	WARN
+	ERROR
+)
+
 type Logger struct {
-	logger *log.Logger
+	mu      sync.Mutex
+	logger  *log.Logger
+	level   Level
+	enabled bool
 }
 
-// NewLogger creates a new Logger that writes to the specified file path with log rotation.
-func NewLogger(path string) *Logger {
-	lumberjackLogger := &lumberjack.Logger{
-		Filename:   path,
-		MaxSize:    5, // MB
-		MaxBackups: 3,
-		MaxAge:     28, // days
-		Compress:   true,
+func NewLogger(path string, level Level, enabled bool) *Logger {
+	var logger *log.Logger
+	if enabled {
+		lumberjackLogger := &lumberjack.Logger{
+			Filename:   path,
+			MaxSize:    5, // MB
+			MaxBackups: 3,
+			MaxAge:     28, // days
+			Compress:   true,
+		}
+		logger = log.New(lumberjackLogger, "", log.LstdFlags)
+	} else {
+		// If disabled, just discard logs or log to os.Stdout as fallback
+		logger = log.New(os.Stdout, "", log.LstdFlags)
 	}
-	logger := log.New(lumberjackLogger, "", log.LstdFlags)
-	return &Logger{logger: logger}
+	return &Logger{
+		logger:  logger,
+		level:   level,
+		enabled: enabled,
+	}
 }
 
-// Info logs an informational message.
+func (l *Logger) log(lv Level, msg string) {
+	l.mu.Lock()
+	defer l.mu.Unlock()
+	if !l.enabled {
+		return
+	}
+	if lv >= l.level {
+		l.logger.Println(msg)
+	}
+}
+
 func (l *Logger) Info(msg string) {
-	l.logger.Println(msg)
+	l.log(INFO, msg)
+}
+
+func (l *Logger) Warn(msg string) {
+	l.log(WARN, msg)
+}
+
+func (l *Logger) Error(msg string) {
+	l.log(ERROR, msg)
 }

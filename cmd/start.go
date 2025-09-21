@@ -20,6 +20,22 @@ var configPath string
 var interval int
 var pidFile = "monitor.pid"
 
+var logEnable bool
+var logLevelStr string
+
+func parseLogLevel(s string) internal.Level {
+	switch s {
+	case "info":
+		return internal.INFO
+	case "warn":
+		return internal.WARN
+	case "error":
+		return internal.ERROR
+	default:
+		return internal.INFO
+	}
+}
+
 var startCmd = &cobra.Command{
 	Use:   "start [url1] [url2] ...",
 	Short: "Start periodic monitoring of URLs",
@@ -52,7 +68,8 @@ var startCmd = &cobra.Command{
 			return errors.New("no URLs provided")
 		}
 
-		logger := internal.NewLogger(logfile)
+		logLevel := parseLogLevel(logLevelStr)
+		logger := internal.NewLogger(logfile, logLevel, logEnable)
 
 		go func() {
 			ticker := time.NewTicker(time.Duration(interval) * time.Second)
@@ -73,7 +90,7 @@ var startCmd = &cobra.Command{
 						} else {
 							msg := fmt.Sprintf("[FAIL] %s - %v", u, err)
 							color.New(color.FgRed).Println(msg)
-							logger.Info(msg)
+							logger.Error(msg)
 						}
 					}(url)
 				}
@@ -102,5 +119,7 @@ var startCmd = &cobra.Command{
 func init() {
 	startCmd.Flags().StringVarP(&configPath, "config", "c", "", "Path to YAML config file")
 	startCmd.Flags().IntVarP(&interval, "interval", "i", 60, "Monitoring interval in seconds (ignored if config is set)")
+	startCmd.Flags().BoolVarP(&logEnable, "log", "g", true, "Enable logging to file")
+	startCmd.Flags().StringVarP(&logLevelStr, "loglevel", "v", "info", "Log level: info, warn, error")
 	rootCmd.AddCommand(startCmd)
 }

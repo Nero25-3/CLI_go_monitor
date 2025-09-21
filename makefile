@@ -1,6 +1,6 @@
 APP_NAME=monitor
 
-.PHONY: run lint test clean build tidy start stop status
+.PHONY: run lint test clean build tidy start stop status check-json check-html
 
 run:
 	go run main.go check https://google.com https://badurl.com -t 5 -l results.log
@@ -40,3 +40,12 @@ install-deps:
 	go mod download
 run-yaml:
 	go run main.go start -c config.yaml
+
+check-json:
+	go run main.go check https://google.com https://example.com --export-json results.json
+
+check-html:
+	go run main.go check https://google.com https://example.com --export-html results.html
+
+check-all:
+	go run main.go check https://google.com https://example.com --export-json results.json --export-html results.html
