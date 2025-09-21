@@ -1,0 +1,14 @@
+urls:
+  - https://google.com
+  - https://example.com
+  - https://github.com
+  - https://wikipedia.org
+  - https://stackoverflow.com
+  - https://microsoft.com
+  - https://cloudflare.com
+  - https://google.com/robots.txt
+  - http://httpstat.us/200
+  - http://httpstat.us/503
+interval: 60
+timeout: 5
+logfile: monitor.log
