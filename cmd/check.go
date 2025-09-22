@@ -144,6 +144,6 @@ func init() {
 	checkCmd.Flags().BoolVarP(&logEnable, "log", "g", true, "Enable logging to file")
 	checkCmd.Flags().StringVarP(&logLevelStr, "loglevel", "v", "info", "Log level: info, warn, error")
 	checkCmd.Flags().StringVarP(&exportJSON, "export-json", "j", "", "File to export results in JSON")
-	checkCmd.Flags().StringVarP(&exportHTML, "export-html", "h", "", "File to export results in HTML")
+	checkCmd.Flags().StringVarP(&exportHTML, "export-html", "x", "", "File to export results in HTML")
 	rootCmd.AddCommand(checkCmd)
 }

@@ -3,7 +3,7 @@ APP_NAME=monitor
 .PHONY: run lint test clean build tidy start stop status check-json check-html
 
 run:
-	go run main.go check https://google.com https://badurl.com -t 5 -l results.log
+	go run main.go check https://www.google.com https://www.badurl.com -t 5 -l results.log
 
 
 lint:
@@ -39,7 +39,7 @@ clean-cache:
 install-deps:
 	go mod download
 run-yaml:
-	go run main.go start -c config.yaml
+	go run main.go start -c ./config.yaml
 
 check-json:
 	go run main.go check https://google.com https://example.com --export-json results.json

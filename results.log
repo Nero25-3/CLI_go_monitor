@@ -1,0 +1,10 @@
+2025/09/22 20:14:17 https://www.google.com                   [OK]
+2025/09/22 20:14:17 https://www.badurl.com                   [FAIL] HTTP status 403
+2025/09/22 20:14:17 
+Summary: 1 successful, 1 failed
+
+2025/09/22 20:14:40 https://www.google.com                   [OK]
+2025/09/22 20:14:40 https://www.badurl.com                   [FAIL] HTTP status 403
+2025/09/22 20:14:40 
+Summary: 1 successful, 1 failed
+
