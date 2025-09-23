@@ -1,0 +1,15 @@
+2025/09/23 23:07:43 fail-url                                 [FAIL] fail test
+2025/09/23 23:07:43 https://ok.com                           [OK]
+2025/09/23 23:07:43 
+Summary: 1 successful, 1 failed
+
+2025/09/23 23:07:46 fail-url                                 [FAIL] fail test
+2025/09/23 23:07:46 https://ok.com                           [OK]
+2025/09/23 23:07:46 
+Summary: 1 successful, 1 failed
+
+2025/09/23 23:08:21 fail-url                                 [FAIL] fail test
+2025/09/23 23:08:21 https://ok.com                           [OK]
+2025/09/23 23:08:21 
+Summary: 1 successful, 1 failed
+

@@ -1,6 +1,8 @@
 APP_NAME=monitor
+DEBUG_PORT=2345
+DEBUG_HEADLESS=false
 
-.PHONY: run lint test clean build tidy start stop status check-json check-html
+.PHONY: run lint test clean build tidy start stop status check-json check-html debug
 
 run:
 	go run main.go check https://www.google.com https://www.badurl.com -t 5 -l results.log
@@ -49,3 +51,6 @@ check-html:
 
 check-all:
 	go run main.go check https://google.com https://example.com --export-json results.json --export-html results.html
+
+debug:	
+	dlv debug --headless=$(DEBUG_HEADLESS) --listen=:$${DEBUG_PORT} --api-version=2 --accept-multiclient ./main.go -- $(ARGS)

@@ -8,21 +8,32 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
+// Level represents the severity of the log message.
 type Level int
 
+// constants for log levels
 const (
 	INFO Level = iota
 	WARN
 	ERROR
 )
 
+// Logger is a simple logging structure with log rotation.
 type Logger struct {
 	mu      sync.Mutex
-	logger  *log.Logger
-	level   Level
-	enabled bool
+	Logger  *log.Logger
+	Level   Level
+	Enabled bool
 }
 
+// LoggerInterface defines the methods for logging at different levels.
+type LoggerInterface interface {
+	Info(msg string)
+	Warn(msg string)
+	Error(msg string)
+}
+
+// NewLogger creates a new Logger instance.
 func NewLogger(path string, level Level, enabled bool) *Logger {
 	var logger *log.Logger
 	if enabled {
@@ -39,31 +50,34 @@ func NewLogger(path string, level Level, enabled bool) *Logger {
 		logger = log.New(os.Stdout, "", log.LstdFlags)
 	}
 	return &Logger{
-		logger:  logger,
-		level:   level,
-		enabled: enabled,
+		Logger:  logger,
+		Level:   level,
+		Enabled: enabled,
 	}
 }
 
 func (l *Logger) log(lv Level, msg string) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
-	if !l.enabled {
+	if !l.Enabled {
 		return
 	}
-	if lv >= l.level {
-		l.logger.Println(msg)
+	if lv >= l.Level {
+		l.Logger.Println(msg)
 	}
 }
 
+// Info logs an info level message.
 func (l *Logger) Info(msg string) {
 	l.log(INFO, msg)
 }
 
+// Warn logs a warning level message.
 func (l *Logger) Warn(msg string) {
 	l.log(WARN, msg)
 }
 
+// Error logs an error level message.
 func (l *Logger) Error(msg string) {
 	l.log(ERROR, msg)
 }
