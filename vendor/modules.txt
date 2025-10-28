@@ -4,6 +4,10 @@ github.com/davecgh/go-spew/spew
 # github.com/fatih/color v1.18.0
 ## explicit; go 1.17
 github.com/fatih/color
+# github.com/fsnotify/fsnotify v1.9.0
+## explicit; go 1.17
+github.com/fsnotify/fsnotify
+github.com/fsnotify/fsnotify/internal
 # github.com/inconshreveable/mousetrap v1.1.0
 ## explicit; go 1.18
 github.com/inconshreveable/mousetrap

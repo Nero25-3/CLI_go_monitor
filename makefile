@@ -6,8 +6,7 @@ DEBUG_HEADLESS=false
 
 run:
 	go run main.go check https://www.google.com https://www.badurl.com -t 5 -l results.log
-
-
+	
 lint:
 	golangci-lint run ./...
 
