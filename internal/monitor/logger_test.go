@@ -1,12 +1,11 @@
-package internal_test
+package monitor_test
 
 import (
+	"CLI_go_monitor/internal/monitor"
 	"bytes"
 	"log"
 	"strings"
 	"testing"
-
-	"CLI_go_monitor/internal"
 )
 
 func NewTestLogger(buf *bytes.Buffer) *log.Logger {
@@ -16,9 +15,9 @@ func NewTestLogger(buf *bytes.Buffer) *log.Logger {
 func TestLoggerLevels(t *testing.T) {
 	var buf bytes.Buffer
 
-	logger := &internal.Logger{
+	logger := &monitor.Logger{
 		Logger:  NewTestLogger(&buf),
-		Level:   internal.INFO,
+		Level:   monitor.INFO,
 		Enabled: true,
 	}
 
@@ -37,9 +36,9 @@ func TestLoggerLevels(t *testing.T) {
 func TestLoggerLevelFiltering(t *testing.T) {
 	var buf bytes.Buffer
 
-	logger := &internal.Logger{
+	logger := &monitor.Logger{
 		Logger:  NewTestLogger(&buf),
-		Level:   internal.WARN,
+		Level:   monitor.WARN,
 		Enabled: true,
 	}
 
@@ -59,9 +58,9 @@ func TestLoggerLevelFiltering(t *testing.T) {
 func TestLoggerDisabled(t *testing.T) {
 	var buf bytes.Buffer
 
-	logger := &internal.Logger{
+	logger := &monitor.Logger{
 		Logger:  NewTestLogger(&buf),
-		Level:   internal.INFO,
+		Level:   monitor.INFO,
 		Enabled: false,
 	}
 
@@ -75,7 +74,7 @@ func TestLoggerDisabled(t *testing.T) {
 }
 
 func TestWithMockLogger(t *testing.T) {
-	mock := &internal.MockLogger{}
+	mock := &monitor.MockLogger{}
 
 	mock.Info("test info")
 	mock.Warn("test warn")
@@ -87,31 +86,31 @@ func TestWithMockLogger(t *testing.T) {
 }
 
 func TestNewLogger(t *testing.T) {
-	logger := internal.NewLogger("test.log", internal.INFO, true)
+	logger := monitor.NewLogger("test.log", monitor.INFO, true)
 	if logger == nil {
 		t.Fatal("expected non-nil logger")
 	}
 	if logger.Enabled != true {
 		t.Errorf("expected Enabled true")
 	}
-	if logger.Level != internal.INFO {
+	if logger.Level != monitor.INFO {
 		t.Errorf("expected Level INFO")
 	}
 
-	logger2 := internal.NewLogger("", internal.ERROR, false)
+	logger2 := monitor.NewLogger("", monitor.ERROR, false)
 	if logger2 == nil {
 		t.Fatal("expected non-nil logger")
 	}
 	if logger2.Enabled != false {
 		t.Errorf("expected Enabled false")
 	}
-	if logger2.Level != internal.ERROR {
+	if logger2.Level != monitor.ERROR {
 		t.Errorf("expected Level ERROR")
 	}
 }
 
 func TestMockLoggerReset(t *testing.T) {
-	mockLog := &internal.MockLogger{}
+	mockLog := &monitor.MockLogger{}
 	mockLog.Info("message 1")
 	mockLog.Warn("message 2")
 

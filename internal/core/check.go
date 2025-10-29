@@ -1,7 +1,7 @@
-package cmd
+package core
 
 import (
-	"CLI_go_monitor/internal"
+	"CLI_go_monitor/internal/monitor"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -20,7 +20,7 @@ var exportJSON string
 var exportHTML string
 
 // MonitorURLFunc is a variable to allow mocking in tests
-var MonitorURLFunc = internal.MonitorURL
+var MonitorURLFunc = MonitorURL
 
 // CheckResult holds the result of checking a URL
 type CheckResult struct {
@@ -82,7 +82,7 @@ func RunCheck(args []string, timeout int, logfile string, exportJSON string, exp
 		return errors.New("no URLs provided")
 	}
 
-	logger := internal.NewLogger(logfile, parseLogLevel(logLevelStr), logEnable)
+	logger := monitor.NewLogger(logfile, parseLogLevel(logLevelStr), logEnable)
 
 	var wg sync.WaitGroup
 	resultsChan := make(chan CheckResult, len(args))

@@ -1,4 +1,4 @@
-package cmd_test
+package core_test
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"CLI_go_monitor/cmd"
+	"CLI_go_monitor/internal/core"
 )
 
 type mockLogger struct {
@@ -18,17 +18,17 @@ func (m *mockLogger) Warn(msg string)  { m.Messages = append(m.Messages, msg) }
 func (m *mockLogger) Error(msg string) { m.Messages = append(m.Messages, msg) }
 
 func TestRunCheck(t *testing.T) {
-	original := cmd.MonitorURLFunc
-	defer func() { cmd.MonitorURLFunc = original }()
+	original := core.MonitorURLFunc
+	defer func() { core.MonitorURLFunc = original }()
 
-	cmd.MonitorURLFunc = func(url string, timeout time.Duration) error {
+	core.MonitorURLFunc = func(url string, timeout time.Duration) error {
 		if strings.Contains(url, "fail") {
 			return fmt.Errorf("fail error")
 		}
 		return nil
 	}
 
-	err := cmd.RunCheck([]string{"https://ok.com", "https://fail.com"}, 5, "", "", "")
+	err := core.RunCheck([]string{"https://ok.com", "https://fail.com"}, 5, "", "", "")
 	if err != nil {
 		t.Fatalf("RunCheck failed: %v", err)
 	}

@@ -1,4 +1,4 @@
-package internal
+package monitor
 
 // MockLogger is a mock implementation of LoggerInterface for testing purposes.
 type MockLogger struct {
