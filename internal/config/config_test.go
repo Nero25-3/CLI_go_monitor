@@ -1,7 +1,7 @@
-package internal_test
+package config_test
 
 import (
-	"CLI_go_monitor/internal"
+	internal "CLI_go_monitor/internal/config"
 	"os"
 	"testing"
 )

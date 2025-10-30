@@ -1,6 +1,8 @@
-package cmd
+package core
 
 import (
+	"CLI_go_monitor/internal/config"
+	"CLI_go_monitor/internal/monitor"
 	"errors"
 	"fmt"
 	"os"
@@ -9,8 +11,6 @@ import (
 	"sync"
 	"syscall"
 	"time"
-
-	"CLI_go_monitor/internal"
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
@@ -23,16 +23,16 @@ var pidFile = "monitor.pid"
 var logEnable bool
 var logLevelStr string
 
-func parseLogLevel(s string) internal.Level {
+func parseLogLevel(s string) monitor.Level {
 	switch s {
 	case "info":
-		return internal.INFO
+		return monitor.INFO
 	case "warn":
-		return internal.WARN
+		return monitor.WARN
 	case "error":
-		return internal.ERROR
+		return monitor.ERROR
 	default:
-		return internal.INFO
+		return monitor.INFO
 	}
 }
 
@@ -50,7 +50,7 @@ var startCmd = &cobra.Command{
 		var logfile string
 
 		if configPath != "" {
-			cfg, err := internal.ReadConfig(configPath)
+			cfg, err := config.ReadConfig(configPath)
 			if err != nil {
 				return fmt.Errorf("failed to read config file: %w", err)
 			}
@@ -69,7 +69,7 @@ var startCmd = &cobra.Command{
 		}
 
 		logLevel := parseLogLevel(logLevelStr)
-		logger := internal.NewLogger(logfile, logLevel, logEnable)
+		logger := monitor.NewLogger(logfile, logLevel, logEnable)
 
 		go func() {
 			ticker := time.NewTicker(time.Duration(interval) * time.Second)
@@ -82,7 +82,7 @@ var startCmd = &cobra.Command{
 				for _, url := range urls {
 					go func(u string) {
 						defer wg.Done()
-						err := internal.MonitorURL(u, time.Duration(timeout)*time.Second)
+						err := MonitorURL(u, time.Duration(timeout)*time.Second)
 						if err == nil {
 							msg := fmt.Sprintf("[OK] %s", u)
 							color.New(color.FgGreen).Println(msg)

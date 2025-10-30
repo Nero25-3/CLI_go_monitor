@@ -53,3 +53,13 @@ Summary: 1 successful, 1 failed
 2025/09/28 18:18:27 
 Summary: 1 successful, 1 failed
 
+2025/10/29 22:37:41 https://www.google.com                   [OK]
+2025/10/29 22:37:41 https://www.badurl.com                   [FAIL] HTTP status 403
+2025/10/29 22:37:41 
+Summary: 1 successful, 1 failed
+
+2025/10/29 22:38:55 https://www.google.com                   [OK]
+2025/10/29 22:38:56 https://www.badurl.com                   [FAIL] HTTP status 403
+2025/10/29 22:38:56 
+Summary: 1 successful, 1 failed
+

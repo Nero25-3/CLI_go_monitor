@@ -1,7 +1,7 @@
-package internal_test
+package core_test
 
 import (
-	"CLI_go_monitor/internal"
+	"CLI_go_monitor/internal/core"
 	"net/http"
 	"net/http/httptest"
 	"sync"
@@ -22,7 +22,7 @@ func TestMonitorURL(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.url, func(t *testing.T) {
-			errTest := internal.MonitorURL(tt.url, tt.timeout)
+			errTest := core.MonitorURL(tt.url, tt.timeout)
 			// Check if the error is nil for reachable URLs and not nil for unreachable URLs
 			if tt.url == "https://www.google.com" {
 				assert.NoError(t, errTest)
@@ -60,7 +60,7 @@ func TestMonitorURLServer(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			err := internal.MonitorURL(tt.url, 2*time.Second)
+			err := core.MonitorURL(tt.url, 2*time.Second)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("MonitorURL() error = %v, wantErr %v", err, tt.wantErr)
 			}
@@ -99,7 +99,7 @@ func TestMonitorMultipleURLsConcurrently(t *testing.T) {
 			wantErr bool
 		}) {
 			defer wg.Done()
-			results[i] = internal.MonitorURL(tt.url, 500*time.Millisecond)
+			results[i] = core.MonitorURL(tt.url, 500*time.Millisecond)
 		}(i, tt)
 	}
 
