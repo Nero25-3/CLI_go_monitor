@@ -38,24 +38,7 @@ In my professional experience supporting critical systems, most monitoring tools
 The following diagram illustrates the high-level architecture and data flows for CLI_go_monitor:
 
 
-```
-flowchart TD
-    A[CLI Entry - main.go]
-    B[Configuration - YAML/JSON/TOML/ENV]
-    C[Core Logic - Scheduler and Hub]
-    D[Monitor Plugins - Check]
-    E[Alert Plugins - Notifier]
-    F[Results Logging, Storage, Prometheus]
-
-    A --> B
-    B --> C
-    C --> D
-    C --> E
-    D --> F
-    D --> E
-    E --> F
-
-```
+![System Architecture Diagram](/docs/CLI_go_monitor.png)
 
 ## Project structure
 
