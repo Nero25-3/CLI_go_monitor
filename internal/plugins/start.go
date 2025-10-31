@@ -1,7 +1,8 @@
-package core
+package plugins
 
 import (
 	"CLI_go_monitor/internal/config"
+	"CLI_go_monitor/internal/core"
 	"CLI_go_monitor/internal/monitor"
 	"errors"
 	"fmt"
@@ -82,7 +83,7 @@ var startCmd = &cobra.Command{
 				for _, url := range urls {
 					go func(u string) {
 						defer wg.Done()
-						err := MonitorURL(u, time.Duration(timeout)*time.Second)
+						err := core.MonitorURL(u, time.Duration(timeout)*time.Second)
 						if err == nil {
 							msg := fmt.Sprintf("[OK] %s", u)
 							color.New(color.FgGreen).Println(msg)

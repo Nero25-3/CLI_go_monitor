@@ -1,6 +1,7 @@
-package core
+package plugins
 
 import (
+	"CLI_go_monitor/internal/core"
 	"CLI_go_monitor/internal/monitor"
 	"encoding/json"
 	"errors"
@@ -20,7 +21,7 @@ var exportJSON string
 var exportHTML string
 
 // MonitorURLFunc is a variable to allow mocking in tests
-var MonitorURLFunc = MonitorURL
+var MonitorURLFunc = core.MonitorURL
 
 // CheckResult holds the result of checking a URL
 type CheckResult struct {

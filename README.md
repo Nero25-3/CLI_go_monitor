@@ -39,23 +39,21 @@ The following diagram illustrates the high-level architecture and data flows for
 
 
 ```
-mermaid
-
 flowchart TD
-A[CLI Entry (main.go)]
-B[Configuration (YAML/JSON/TOML/ENV)]
-C[Core Logic (Scheduler · Hub)]
-D[Monitor Plugins (Checker)]
-E[Alert Plugins (Notifier)]
-F[Results Logging / Storage / Prometheus]
+    A[CLI Entry - main.go]
+    B[Configuration - YAML/JSON/TOML/ENV]
+    C[Core Logic - Scheduler and Hub]
+    D[Monitor Plugins - Check]
+    E[Alert Plugins - Notifier]
+    F[Results Logging, Storage, Prometheus]
 
-A --> B  
-B --> C  
-C --> D  
-C --> E  
-D --> F  
-D --> E  
-E --> F
+    A --> B
+    B --> C
+    C --> D
+    C --> E
+    D --> F
+    D --> E
+    E --> F
 
 ```
 
@@ -71,7 +69,7 @@ CLI_go_monitor/
 │   ├── core/                # Scheduler, event hub, plugin orchestrator
 │   ├── config/              # Parsing, validation, config management
 │   ├── plugins/             # Interfaces and plugin registry
-│   │   ├── checker.go       # Interface for monitor plugins
+│   │   ├── check.go         # Interface for monitor plugins
 │   │   └── notifier.go      # Interface for alert plugins
 │   ├── monitor/             # Implementation of monitor plugins (HTTP, ping, etc.)
 │   └── alert/               # Implementation of alert plugins (Slack, email, etc.)
