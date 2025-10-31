@@ -76,7 +76,7 @@ CLI_go_monitor/
 ```
 
 
-**Description:**
+**Description:** 
 - **CLI Entry (`main.go`):** Parses user arguments, loads configuration, serves as the application's entry point.
 - **Configuration:** Supports YAML, JSON, TOML, ENV files for flexible setup.
 - **Core Logic:** Schedules checks, manages event flow, and orchestrates plugins.
