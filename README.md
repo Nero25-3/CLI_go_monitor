@@ -106,7 +106,7 @@ Open to PRs, suggestions, and feedback:
 
 ## Differentiation
 
-Compared to XMonitor, YWatchdog, and others, CLI_go_monitor emphasizes:
+CLI_go_monitor emphasizes:
 
 - **Security:** Robust validation and protected logging
 - **Flexibility:** Plugin system & multi-config support
