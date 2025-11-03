@@ -37,6 +37,8 @@ func parseLogLevel(s string) monitor.Level {
 	}
 }
 
+var slackNotifier = &SlackNotifier{}
+
 var startCmd = &cobra.Command{
 	Use:   "start [url1] [url2] ...",
 	Short: "Start periodic monitoring of URLs",
@@ -55,6 +57,7 @@ var startCmd = &cobra.Command{
 			if err != nil {
 				return fmt.Errorf("failed to read config file: %w", err)
 			}
+			slackNotifier = NewSlackNotifier(cfg.Notifiers.Slack.WebhookURL)
 			urls = cfg.URLs
 			interval = cfg.Interval
 			timeout = cfg.Timeout
@@ -92,6 +95,18 @@ var startCmd = &cobra.Command{
 							msg := fmt.Sprintf("[FAIL] %s - %v", u, err)
 							color.New(color.FgRed).Println(msg)
 							logger.Error(msg)
+
+							notice := Notice{
+								URL:        u,
+								Status:     "FAILED",
+								StatusCode: 0,
+								Message:    err.Error(),
+								Timestamp:  time.Now(),
+							}
+							notifyErr := slackNotifier.Notify(notice)
+							if notifyErr != nil {
+								logger.Error(fmt.Sprintf("Slack notification failed: %v", notifyErr))
+							}
 						}
 					}(url)
 				}

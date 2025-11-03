@@ -9,12 +9,20 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+// NotifiersConfig holds configuration for notifiers
+type NotifiersConfig struct {
+	Slack struct {
+		WebhookURL string `yaml:"webhook_url"`
+	} `yaml:"slack"`
+}
+
 // Config represents the structure of the configuration file
 type Config struct {
-	URLs     []string `yaml:"urls"`
-	Interval int      `yaml:"interval"`
-	Timeout  int      `yaml:"timeout"`
-	Logfile  string   `yaml:"logfile"`
+	URLs      []string        `yaml:"urls"`
+	Interval  int             `yaml:"interval"`
+	Timeout   int             `yaml:"timeout"`
+	Logfile   string          `yaml:"logfile"`
+	Notifiers NotifiersConfig `yaml:"notifiers"`
 }
 
 var (
